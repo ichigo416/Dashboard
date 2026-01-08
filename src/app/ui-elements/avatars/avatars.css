@@ -61,3 +61,7 @@
   width: 192px;
   height: 192px;
 }
+/* avatar spacing fix */
+.avatar {
+  margin-right: 0.5rem;
+}
