@@ -1,0 +1,28 @@
+.alert-box {
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.alert-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* Success */
+.alert-box.success {
+  background: #ecfdf5;
+  border: 1px solid #22c55e;
+  color: #065f46;
+}
+
+/* Warning */
+.alert-box.warning {
+  background: #fff7ed;
+  border: 1px solid #fb923c;
+  color: #7c2d12;
+}
+
+.alert-box a {
+  font-weight: 500;
+  text-decoration: underline;
+}

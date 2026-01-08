@@ -1,0 +1,11 @@
+.auth-page {
+  max-width: 420px;
+  margin: 80px auto;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: #64748b;
+  text-decoration: none;
+}

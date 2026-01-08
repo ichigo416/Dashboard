@@ -1,0 +1,190 @@
+<div class="vh-100 border-end bg-white sidebar" style="width:260px;">
+
+  <!-- Logo -->
+  <div class="p-4 fw-bold text-primary fs-4">
+    TailAdmin
+  </div>
+
+  <!-- Navigation -->
+  <ul class="nav flex-column px-3 gap-1">
+
+    <!-- Calendar -->
+    <li class="nav-item">
+      <a class="nav-link">
+        <i class="bi bi-calendar me-2"></i>
+        Calendar
+      </a>
+    </li>
+
+    <!-- User Profile -->
+    <li class="nav-item">
+      <a class="nav-link">
+        <i class="bi bi-person me-2"></i>
+        User Profile
+      </a>
+    </li>
+
+    <!-- Forms -->
+    <li class="nav-item">
+      <a class="nav-link d-flex justify-content-between align-items-center">
+        <span>
+          <i class="bi bi-card-text me-2"></i>
+          Forms
+        </span>
+        <i class="bi bi-chevron-down small"></i>
+      </a>
+    </li>
+
+    <!-- Tables -->
+    <li class="nav-item">
+      <a class="nav-link d-flex justify-content-between align-items-center">
+        <span>
+          <i class="bi bi-table me-2"></i>
+          Tables
+        </span>
+        <i class="bi bi-chevron-down small"></i>
+      </a>
+    </li>
+
+    <!-- Pages -->
+    <li class="nav-item">
+      <a class="nav-link d-flex justify-content-between align-items-center">
+        <span>
+          <i class="bi bi-file-earmark-text me-2"></i>
+          Pages
+        </span>
+        <i class="bi bi-chevron-down small"></i>
+      </a>
+    </li>
+
+    <!-- Others label -->
+    <li class="nav-item mt-3 px-2 text-uppercase text-muted small">
+      Others
+    </li>
+
+   <li class="nav-item">
+  <a
+    class="nav-link d-flex justify-content-between align-items-center"
+    (click)="toggleDropdown('charts')"
+  >
+    <span>
+      <i class="bi bi-pie-chart me-2"></i>
+      Charts
+    </span>
+
+    <i
+      class="bi"
+      [class.bi-chevron-up]="openDropdown === 'charts'"
+      [class.bi-chevron-down]="openDropdown !== 'charts'"
+    ></i>
+  </a>
+
+  <ul
+    class="nav flex-column ms-4 mt-2"
+    *ngIf="openDropdown === 'charts'"
+  >
+    <li class="nav-item">
+      <a routerLink="/charts/line" class="nav-link">
+        Line Chart
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/charts/bar" class="nav-link">
+        Bar Chart
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+    <!-- UI Elements -->
+    <li class="nav-item">
+  <a class="nav-link d-flex justify-content-between align-items-center"
+     (click)="toggleDropdown('ui')">
+    <span>
+      <i class="bi bi-box me-2"></i>
+      Ui Elements
+    </span>
+    <i class="bi"
+       [class.bi-chevron-up]="openDropdown === 'ui'"
+       [class.bi-chevron-down]="openDropdown !== 'ui'"></i>
+  </a>
+
+  <ul class="nav flex-column ms-4 mt-2"
+      *ngIf="openDropdown === 'ui'">
+
+    <li class="nav-item">
+  <a routerLink="/ui/alerts" class="nav-link">
+    Alerts
+  </a>
+</li>
+
+
+   <li class="nav-item">
+  <a routerLink="/ui/avatars" class="nav-link">
+    Avatars
+  </a>
+</li>
+
+
+    <a routerLink="/ui/badges" class="nav-link">
+  Badge
+</a>
+
+
+    <li class="nav-item">
+  <a routerLink="/ui/buttons" class="nav-link">
+    Buttons
+  </a>
+</li>
+
+
+    <li class="nav-item">
+  <a routerLink="/ui/images" class="nav-link">
+    Images
+  </a>
+</li>
+
+
+    <li class="nav-item">
+  <a routerLink="/ui/videos" class="nav-link">
+    Videos
+  </a>
+</li>
+
+  </ul>
+</li>
+    <!-- UI Elements -->
+
+    <!-- Authentication -->
+   <li class="nav-item">
+  <a class="nav-link d-flex justify-content-between align-items-center"
+     (click)="toggleDropdown('auth')"
+>
+    <span>
+      <i class="bi bi-plug me-2"></i>
+      Authentication
+    </span>
+    <i class="bi"
+       [class.bi-chevron-up]="openDropdown === 'auth'"
+       [class.bi-chevron-down]="openDropdown !== 'auth'"></i>
+  </a>
+
+  <ul class="nav flex-column ms-4 mt-2"
+      *ngIf="openDropdown === 'auth'">
+    <li class="nav-item">
+      <a routerLink="/auth/signin" class="nav-link">
+        Sign In
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/auth/signup" class="nav-link">
+        Sign Up
+      </a>
+    </li>
+  </ul>
+</li>
+    <!-- Authentication -->
+    <li class="nav-item">
+

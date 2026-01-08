@@ -1,0 +1,36 @@
+.badge-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Base badge */
+.badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Light background */
+.badge.light.primary { background:#eef2ff; color:#4f46e5; }
+.badge.light.success { background:#ecfdf5; color:#16a34a; }
+.badge.light.error   { background:#fef2f2; color:#dc2626; }
+.badge.light.warning { background:#fff7ed; color:#ea580c; }
+.badge.light.info    { background:#eff6ff; color:#2563eb; }
+.badge.light.gray    { background:#f3f4f6; color:#374151; }
+.badge.light.dark    { background:#e5e7eb; color:#111827; }
+
+/* Solid background */
+.badge.solid.primary { background:#4f46e5; color:#fff; }
+.badge.solid.success { background:#22c55e; color:#fff; }
+.badge.solid.error   { background:#ef4444; color:#fff; }
+.badge.solid.warning { background:#f97316; color:#fff; }
+.badge.solid.info    { background:#3b82f6; color:#fff; }
+.badge.solid.gray    { background:#9ca3af; color:#fff; }
+.badge.solid.dark    { background:#374151; color:#fff; }
+/* Outline */
+.badge.outline.primary { border: 2px solid #4f46e5; color:#4f46e5; background: transparent; }
+.badge.outline.success { border: 2px solid #22c55e; color       :#22c55e; background: transparent; }
+.badge.outline.error   { border: 2px solid #ef4444; color       :#ef4444; background: transparent; }
+.badge.outline.warning { border: 2px solid #f97316; color    :#f97316; background: transparent; }           

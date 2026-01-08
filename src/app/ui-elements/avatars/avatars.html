@@ -1,0 +1,43 @@
+<div class="container-fluid">
+
+  <!-- Default Avatar -->
+  <div class="card p-4 mb-4">
+    <h5 class="fw-semibold mb-4">Default Avatar</h5>
+    <div class="avatar-row">
+      <img *ngFor="let s of [32,40,48,56,64,72]"
+           src="https://i.pravatar.cc/150?img=3"
+           [style.width.px]="s"
+           [style.height.px]="s"
+           class="avatar" />
+    </div>
+  </div>
+
+  <!-- Online Avatar -->
+  <div class="card p-4 mb-4">
+    <h5 class="fw-semibold mb-4">Avatar with online indicator</h5>
+    <div class="avatar-row">
+      <div *ngFor="let s of [32,40,48,56,64,72]"
+           class="avatar-wrapper"
+           [style.width.px]="s"
+           [style.height.px]="s">
+        <img src="https://i.pravatar.cc/150?img=3" class="avatar" />
+        <span class="status online"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offline Avatar -->
+  <div class="card p-4">
+    <h5 class="fw-semibold mb-4">Avatar with Offline indicator</h5>
+    <div class="avatar-row">
+      <div *ngFor="let s of [32,40,48,56,64,72]"
+           class="avatar-wrapper"
+           [style.width.px]="s"
+           [style.height.px]="s">
+        <img src="https://i.pravatar.cc/150?img=3" class="avatar" />
+        <span class="status offline"></span>
+      </div>
+    </div>
+  </div>
+
+</div>

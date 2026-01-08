@@ -1,0 +1,301 @@
+<!-- ================= TOP GRID ================= -->
+<div class="row g-4 mb-4">
+
+  <!-- LEFT SIDE -->
+  <div class="col-xl-8 col-lg-12">
+
+    <!-- ================= TOP ROW ================= -->
+    <div class="row g-4 mb-3">
+
+      <!-- Customers -->
+      <div class="col-md-6">
+        <div class="stat-card w-100">
+          <div class="stat-icon">
+            <i class="bi bi-people"></i>
+          </div>
+          <div class="stat-content">
+            <p class="stat-title">Customers</p>
+            <h2 class="stat-value">3,782</h2>
+            <span class="stat-badge stat-up">
+              <i class="bi bi-arrow-up"></i> 11.01%
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders -->
+      <div class="col-md-6">
+        <div class="stat-card w-100">
+          <div class="stat-icon">
+            <i class="bi bi-box"></i>
+          </div>
+          <div class="stat-content">
+            <p class="stat-title">Orders</p>
+            <h2 class="stat-value">5,359</h2>
+            <span class="stat-badge stat-down">
+              <i class="bi bi-arrow-down"></i> 9.05%
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= MONTHLY SALES ================= -->
+    <div class="card p-4 border-0 shadow-sm">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-semibold mb-0">Monthly Sales</h5>
+        <i class="bi bi-three-dots"></i>
+      </div>
+
+      <div style="height: 320px; position: relative;">
+        <canvas #salesChart height="320"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="col-xl-4 col-lg-12">
+    <div class="card p-4 border-0 shadow-sm h-100 d-flex flex-column">
+
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <h5 class="fw-semibold mb-1">Monthly Target</h5>
+          <p class="text-muted mb-0">Target you’ve set for each month</p>
+        </div>
+        <i class="bi bi-three-dots"></i>
+      </div>
+
+      <!-- Meter -->
+      <div class="d-flex justify-content-center my-4">
+        <div class="meter">
+          <span class="meter-value">75.55%</span>
+        </div>
+      </div>
+
+      <div class="text-center mb-3">
+        <span class="badge bg-success-subtle text-success">+10%</span>
+      </div>
+
+      <p class="text-center text-muted px-3">
+        You earn $3287 today, it's higher than last month.
+        <br />
+        Keep up your good work!
+      </p>
+
+      <!-- Bottom stats -->
+      <div class="row text-center mt-auto border-top pt-3">
+        <div class="col">
+          <p class="text-muted mb-1">Target</p>
+          <h6 class="fw-bold">$20K <span class="text-danger">↓</span></h6>
+        </div>
+        <div class="col border-start border-end">
+          <p class="text-muted mb-1">Revenue</p>
+          <h6 class="fw-bold">$20K <span class="text-success">↑</span></h6>
+        </div>
+        <div class="col">
+          <p class="text-muted mb-1">Today</p>
+          <h6 class="fw-bold">$20K <span class="text-success">↑</span></h6>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= STATISTICS ================= -->
+<div class="row g-4 mt-4">
+  <div class="col-12">
+    <div class="card p-4 border-0 shadow-sm">
+
+      <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+          <h5 class="fw-semibold mb-1">Statistics</h5>
+          <p class="text-muted mb-0">Target you’ve set for each month</p>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline-secondary btn-sm active">Monthly</button>
+          <button class="btn btn-outline-secondary btn-sm">Quarterly</button>
+          <button class="btn btn-outline-secondary btn-sm">Annually</button>
+        </div>
+      </div>
+
+      <div style="height: 300px; position: relative;">
+        <canvas #statsChart></canvas>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= DEMOGRAPHIC + RECENT ORDERS ================= -->
+<div class="row g-4 mt-4">
+
+  <!-- Customers Demographic -->
+  <div class="col-xl-5 col-lg-12">
+    <div class="card p-4 border-0 shadow-sm h-100 customers-demographic-card">
+
+
+      <div class="mb-3">
+        <h5 class="fw-semibold mb-1">Customers Demographic</h5>
+        <p class="text-muted mb-0">Number of customer based on country</p>
+      </div>
+
+      <div class="map-wrapper mb-4">
+        <img src="assets/world-map.svg" class="world-map" />
+        <span class="map-dot usa"></span>
+        <span class="map-dot france"></span>
+        <span class="map-dot india"></span>
+      </div>
+
+      <div class="d-flex align-items-center mb-3">
+        <img src="assets/flags/us.svg" class="flag-icon me-2" />
+        <div class="flex-grow-1">
+          <p class="mb-1 fw-medium">USA</p>
+          <small class="text-muted">2,379 Customers</small>
+        </div>
+        <div style="width: 120px;">
+          <div class="progress">
+            <div class="progress-bar bg-primary" style="width: 79%"></div>
+          </div>
+          <small class="fw-medium">79%</small>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center">
+        <img src="assets/flags/fr.svg" class="flag-icon me-2" />
+        <div class="flex-grow-1">
+          <p class="mb-1 fw-medium">France</p>
+          <small class="text-muted">589 Customers</small>
+        </div>
+        <div style="width: 120px;">
+          <div class="progress">
+            <div class="progress-bar bg-primary" style="width: 23%"></div>
+          </div>
+          <small class="fw-medium">23%</small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="col-xl-7 col-lg-12">
+    <div class="card p-4 border-0 shadow-sm h-100">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-semibold mb-0">Recent Orders</h5>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-funnel"></i> Filter
+          </button>
+          <button class="btn btn-outline-secondary btn-sm">See all</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Products</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+           <tr>
+    <td>
+      <div class="d-flex align-items-center gap-2">
+        <img src="assets/products/macbook.png" class="product-img" />
+        <div>
+          <p class="mb-0 fw-medium">Macbook pro 13"</p>
+          <small class="text-muted">2 Variants</small>
+        </div>
+      </div>
+    </td>
+    <td>Laptop</td>
+    <td>$2399.00</td>
+    <td>
+      <span class="badge bg-success-subtle text-success">Delivered</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="d-flex align-items-center gap-2">
+        <img src="assets/products/watch.png" class="product-img" />
+        <div>
+          <p class="mb-0 fw-medium">Apple Watch Ultra</p>
+          <small class="text-muted">1 Variants</small>
+        </div>
+      </div>
+    </td>
+    <td>Watch</td>
+    <td>$879.00</td>
+    <td>
+      <span class="badge bg-warning-subtle text-warning">Pending</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="d-flex align-items-center gap-2">
+        <img src="assets/products/iphone.png" class="product-img" />
+        <div>
+          <p class="mb-0 fw-medium">iPhone 15 Pro Max</p>
+          <small class="text-muted">2 Variants</small>
+        </div>
+      </div>
+    </td>
+    <td>SmartPhone</td>
+    <td>$1869.00</td>
+    <td>
+      <span class="badge bg-success-subtle text-success">Delivered</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="d-flex align-items-center gap-2">
+        <img src="assets/products/ipad.png" class="product-img" />
+        <div>
+          <p class="mb-0 fw-medium">iPad Pro 3rd Gen</p>
+          <small class="text-muted">2 Variants</small>
+        </div>
+      </div>
+    </td>
+    <td>Electronics</td>
+    <td>$1699.00</td>
+    <td>
+      <span class="badge bg-danger-subtle text-danger">Canceled</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="d-flex align-items-center gap-2">
+        <img src="assets/products/airpods.png" class="product-img" />
+        <div>
+          <p class="mb-0 fw-medium">Airpods Pro 2nd Gen</p>
+          <small class="text-muted">1 Variants</small>
+        </div>
+      </div>
+    </td>
+    <td>Accessories</td>
+    <td>$240.00</td>
+    <td>
+      <span class="badge bg-success-subtle text-success">Delivered</span>
+    </td>
+  </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</div>

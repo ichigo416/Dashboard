@@ -1,0 +1,21 @@
+/* ===== Sidebar ===== */
+
+.sidebar .nav-link {
+  color: #475569;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+  background: #f1f5f9;
+}
+
+.sidebar .nav-link i {
+  font-size: 1.1rem;
+}
+
+.sidebar .nav-item .small {
+  font-size: 0.75rem;
+}

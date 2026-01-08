@@ -1,0 +1,33 @@
+img {
+  max-width: 100%;
+}
+
+/* Default */
+.img-default {
+  border-radius: 6px;
+}
+
+/* Rounded */
+.img-rounded {
+  border-radius: 16px;
+}
+
+/* Circle */
+.img-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Shadow */
+.img-shadow {
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+/* Thumbnail */
+.img-thumbnail {    
+  border: 2px solid #e5e7eb;
+  padding: 4px;
+  border-radius: 8px;
+}
