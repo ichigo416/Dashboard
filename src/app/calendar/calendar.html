@@ -1,87 +1,72 @@
-<div class="calendar-page">
+<div class="calendar-container">
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-semibold mb-0">Calendar</h3>
-    <div class="text-muted">Home › Calendar</div>
+  <!-- HEADER -->
+  <div class="calendar-header">
+    <div class="calendar-left">
+      <button class="nav-btn" (click)="prev()">‹</button>
+      <button class="nav-btn" (click)="next()">›</button>
+      <button class="add-event-btn" (click)="openAddEvent()">Add Event +</button>
+    </div>
+
+    <h3>{{ monthLabel }}</h3>
+
+    <div class="view-toggle">
+      <button [class.active]="viewMode === 'month'" (click)="setView('month')">month</button>
+      <button [class.active]="viewMode === 'week'" (click)="setView('week')">week</button>
+      <button [class.active]="viewMode === 'day'" (click)="setView('day')">day</button>
+    </div>
   </div>
 
-  <div class="calendar-card">
+  <!-- ADD EVENT FORM -->
+  <div *ngIf="showAddEvent" class="add-event-form">
+    <input placeholder="Event title" [(ngModel)]="newEvent.title" />
+    <input type="date" [(ngModel)]="newEvent.date" />
+    <input type="time" [(ngModel)]="newEvent.time" />
+    <button class="save" (click)="saveEvent()">Save</button>
+    <button class="cancel" (click)="cancelEvent()">Cancel</button>
+  </div>
 
-    <!-- Toolbar -->
-    <div class="calendar-toolbar">
-      <div class="d-flex align-items-center gap-2">
-        <button class="icon-btn" (click)="previousMonth()">‹</button>
-        <button class="icon-btn" (click)="nextMonth()">›</button>
-        <button class="btn btn-primary btn-sm ms-2" (click)="openModal()">Add Event +</button>
-      </div>
+  <!-- MONTH VIEW -->
+  <div *ngIf="viewMode === 'month'" class="month-grid">
+    <div class="day-name" *ngFor="let d of ['SUN','MON','TUE','WED','THU','FRI','SAT']">{{ d }}</div>
 
-      <div class="calendar-title">{{ monthLabel }}</div>
-
-      <div class="view-toggle">
-        <button class="toggle-btn" [class.active]="viewMode==='month'" (click)="setView('month')">month</button>
-        <button class="toggle-btn" [class.active]="viewMode==='week'" (click)="setView('week')">week</button>
-        <button class="toggle-btn" [class.active]="viewMode==='day'" (click)="setView('day')">day</button>
-      </div>
-    </div>
-
-    <!-- Month -->
-    <div class="calendar-grid" *ngIf="viewMode==='month'">
-      <div class="day-cell" *ngFor="let d of monthDays">
-        <span class="day-number">{{ d.date.getDate() }}</span>
-        <div class="event-dot" *ngFor="let e of eventsForDate(d.date)" [class]="e.type"></div>
+    <div class="day-cell" *ngFor="let day of daysInMonth">
+      <div class="date">{{ day.getDate() }}</div>
+      <div class="event" *ngFor="let ev of eventsForDay(day)">
+        <span class="time">{{ ev.time }}</span>{{ ev.title }}
       </div>
     </div>
+  </div>
 
-    <!-- Week -->
-    <div class="calendar-grid week-view" *ngIf="viewMode==='week'">
-      <div class="day-cell" *ngFor="let d of weekDays">
-        <span class="day-number">{{ d.getDate() }}</span>
-        <div class="event-block" *ngFor="let e of eventsForDate(d)" [class]="e.type">
-          {{ e.title }}
+  <!-- WEEK VIEW -->
+  <div *ngIf="viewMode === 'week'" class="week-grid">
+    <div class="week-header">
+      <div class="time-col"></div>
+      <div class="day-col" *ngFor="let d of getWeekDays()">{{ d | date:'EEE d' }}</div>
+    </div>
+
+    <div class="week-row" *ngFor="let h of hours">
+      <div class="time-col">{{ h }}:00</div>
+      <div class="day-col cell" *ngFor="let d of getWeekDays()">
+        <div class="event" *ngFor="let ev of eventsForDayAndHour(d, h)">
+          {{ ev.time }} {{ ev.title }}
         </div>
       </div>
     </div>
-
-    <!-- Day -->
-    <div class="calendar-day-view" *ngIf="viewMode==='day'">
-      <div class="day-header mb-3">{{ selectedDay | date:'fullDate' }}</div>
-      <div class="hour-row" *ngFor="let h of hours; let i=index">
-        <div class="hour-label">{{ h }}</div>
-        <div class="hour-slot">
-          <div class="event-block" *ngFor="let e of eventsForHour(selectedDay,i)" [class]="e.type">
-            {{ e.title }}
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 
-  <!-- Modal -->
-  <div class="modal-backdrop" *ngIf="showModal">
-    <div class="modal-card">
-      <h5 class="mb-3">Add Event</h5>
+  <!-- DAY VIEW -->
+  <div *ngIf="viewMode === 'day'" class="day-grid">
+    <div class="day-header">{{ currentDate | date:'fullDate' }}</div>
 
-      <input class="form-control mb-2" placeholder="Title" [(ngModel)]="newEvent.title">
-      <input class="form-control mb-2" type="date" [(ngModel)]="newEvent.date">
-
-      <div class="d-flex gap-2 mb-2">
-        <input class="form-control" type="number" min="0" max="23" [(ngModel)]="newEvent.startHour">
-        <input class="form-control" type="number" min="1" max="24" [(ngModel)]="newEvent.endHour">
-      </div>
-
-      <select class="form-control mb-3" [(ngModel)]="newEvent.type">
-        <option value="meeting">Meeting</option>
-        <option value="workshop">Workshop</option>
-        <option value="personal">Personal</option>
-      </select>
-
-      <div class="d-flex justify-content-end gap-2">
-        <button class="btn btn-secondary btn-sm" (click)="closeModal()">Cancel</button>
-        <button class="btn btn-primary btn-sm" (click)="saveEvent()">Save</button>
+    <div class="day-row" *ngFor="let h of hours">
+      <div class="time-col">{{ h }}:00</div>
+      <div class="cell">
+        <div class="event" *ngFor="let ev of eventsForDayAndHour(currentDate, h)">
+          {{ ev.time }} {{ ev.title }}
+        </div>
       </div>
     </div>
   </div>
 
 </div>
-

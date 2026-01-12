@@ -19,3 +19,37 @@
 .sidebar .nav-item .small {
   font-size: 0.75rem;
 }
+:host {
+  width: 330px;
+  min-width: 330px;
+  max-width: 330px;
+
+  display: block;
+  flex-shrink: 0;
+
+  border-right: 1px solid #e5e7eb;
+  background-color: #ffffff;
+}
+
+.sidebar {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.nav {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.nav-link {
+  padding: 10px 12px;
+}
+
+.nav-link.active {
+  background-color: #eef4ff;
+  color: #3b82f6;
+  border-radius: 10px;
+}
+.nav-link.active i {
+  color: #3b82f6;
+} 

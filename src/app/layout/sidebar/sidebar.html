@@ -1,4 +1,4 @@
-<div class="vh-100 border-end bg-white sidebar" style="width:260px;">
+<div class="border-end bg-white sidebar h-100 d-flex flex-column">
 
   <!-- Logo -->
   <div class="p-4 fw-bold text-primary fs-4">
@@ -8,9 +8,47 @@
   <!-- Navigation -->
   <ul class="nav flex-column px-3 gap-1">
 
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a
+        class="nav-link d-flex align-items-center justify-content-between"
+        (click)="toggleDropdown('dashboard')"
+      >
+        <span class="d-flex align-items-center">
+          <i class="bi bi-grid me-2"></i>
+          Dashboard
+        </span>
+
+        <i
+          class="bi"
+          [class.bi-chevron-up]="openDropdown === 'dashboard'"
+          [class.bi-chevron-down]="openDropdown !== 'dashboard'"
+        ></i>
+      </a>
+
+      <ul
+        class="nav flex-column ms-4 mt-2"
+        *ngIf="openDropdown === 'dashboard'"
+      >
+        <li class="nav-item">
+          <a
+            routerLink="/dashboard/ecommerce"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            Ecommerce
+          </a>
+        </li>
+      </ul>
+    </li>
+
     <!-- Calendar -->
     <li class="nav-item">
-      <a class="nav-link">
+      <a
+        routerLink="/calendar"
+        routerLinkActive="active"
+        class="nav-link d-flex align-items-center"
+      >
         <i class="bi bi-calendar me-2"></i>
         Calendar
       </a>
@@ -18,7 +56,11 @@
 
     <!-- User Profile -->
     <li class="nav-item">
-      <a class="nav-link">
+      <a
+        routerLink="/profile"
+        routerLinkActive="active"
+        class="nav-link d-flex align-items-center"
+      >
         <i class="bi bi-person me-2"></i>
         User Profile
       </a>
@@ -26,35 +68,54 @@
 
     <!-- Forms -->
     <li class="nav-item">
-      <a class="nav-link d-flex justify-content-between align-items-center">
-        <span>
+      <a
+        class="nav-link d-flex align-items-center justify-content-between"
+        (click)="toggleDropdown('forms')"
+      >
+        <span class="d-flex align-items-center">
           <i class="bi bi-card-text me-2"></i>
           Forms
         </span>
-        <i class="bi bi-chevron-down small"></i>
+        <i
+          class="bi"
+          [class.bi-chevron-up]="isOpen('forms')"
+          [class.bi-chevron-down]="!isOpen('forms')"
+        ></i>
       </a>
+
+      <ul class="nav flex-column ms-4 mt-2" *ngIf="isOpen('forms')">
+        <li class="nav-item">
+          <a routerLink="/forms/elements" class="nav-link">
+            Form Elements
+          </a>
+        </li>
+      </ul>
     </li>
 
     <!-- Tables -->
     <li class="nav-item">
-      <a class="nav-link d-flex justify-content-between align-items-center">
-        <span>
+      <a
+        class="nav-link d-flex align-items-center justify-content-between"
+        (click)="toggleDropdown('tables')"
+      >
+        <span class="d-flex align-items-center">
           <i class="bi bi-table me-2"></i>
           Tables
         </span>
-        <i class="bi bi-chevron-down small"></i>
+        <i
+          class="bi"
+          [class.bi-chevron-up]="isOpen('tables')"
+          [class.bi-chevron-down]="!isOpen('tables')"
+        ></i>
       </a>
-    </li>
 
-    <!-- Pages -->
-    <li class="nav-item">
-      <a class="nav-link d-flex justify-content-between align-items-center">
-        <span>
-          <i class="bi bi-file-earmark-text me-2"></i>
-          Pages
-        </span>
-        <i class="bi bi-chevron-down small"></i>
-      </a>
+      <ul class="nav flex-column ms-4 mt-2" *ngIf="isOpen('tables')">
+        <li class="nav-item">
+          <a routerLink="/tables/basic" class="nav-link">
+            Basic Tables
+          </a>
+        </li>
+      </ul>
     </li>
 
     <!-- Others label -->
@@ -62,129 +123,82 @@
       Others
     </li>
 
-   <li class="nav-item">
-  <a
-    class="nav-link d-flex justify-content-between align-items-center"
-    (click)="toggleDropdown('charts')"
-  >
-    <span>
-      <i class="bi bi-pie-chart me-2"></i>
-      Charts
-    </span>
-
-    <i
-      class="bi"
-      [class.bi-chevron-up]="openDropdown === 'charts'"
-      [class.bi-chevron-down]="openDropdown !== 'charts'"
-    ></i>
-  </a>
-
-  <ul
-    class="nav flex-column ms-4 mt-2"
-    *ngIf="openDropdown === 'charts'"
-  >
+    <!-- Charts -->
     <li class="nav-item">
-      <a routerLink="/charts/line" class="nav-link">
-        Line Chart
+      <a
+        class="nav-link d-flex align-items-center justify-content-between"
+        (click)="toggleDropdown('charts')"
+      >
+        <span class="d-flex align-items-center">
+          <i class="bi bi-pie-chart me-2"></i>
+          Charts
+        </span>
+        <i
+          class="bi"
+          [class.bi-chevron-up]="isOpen('charts')"
+          [class.bi-chevron-down]="!isOpen('charts')"
+        ></i>
       </a>
-    </li>
 
-    <li class="nav-item">
-      <a routerLink="/charts/bar" class="nav-link">
-        Bar Chart
-      </a>
+      <ul class="nav flex-column ms-4 mt-2" *ngIf="isOpen('charts')">
+        <li class="nav-item">
+          <a routerLink="/charts/line" class="nav-link">Line Chart</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/charts/bar" class="nav-link">Bar Chart</a>
+        </li>
+      </ul>
     </li>
-  </ul>
-</li>
-
 
     <!-- UI Elements -->
     <li class="nav-item">
-  <a class="nav-link d-flex justify-content-between align-items-center"
-     (click)="toggleDropdown('ui')">
-    <span>
-      <i class="bi bi-box me-2"></i>
-      Ui Elements
-    </span>
-    <i class="bi"
-       [class.bi-chevron-up]="openDropdown === 'ui'"
-       [class.bi-chevron-down]="openDropdown !== 'ui'"></i>
-  </a>
+      <a
+        class="nav-link d-flex align-items-center justify-content-between"
+        (click)="toggleDropdown('ui')"
+      >
+        <span class="d-flex align-items-center">
+          <i class="bi bi-box me-2"></i>
+          UI Elements
+        </span>
+        <i
+          class="bi"
+          [class.bi-chevron-up]="isOpen('ui')"
+          [class.bi-chevron-down]="!isOpen('ui')"
+        ></i>
+      </a>
 
-  <ul class="nav flex-column ms-4 mt-2"
-      *ngIf="openDropdown === 'ui'">
-
-    <li class="nav-item">
-  <a routerLink="/ui/alerts" class="nav-link">
-    Alerts
-  </a>
-</li>
-
-
-   <li class="nav-item">
-  <a routerLink="/ui/avatars" class="nav-link">
-    Avatars
-  </a>
-</li>
-
-
-    <a routerLink="/ui/badges" class="nav-link">
-  Badge
-</a>
-
-
-    <li class="nav-item">
-  <a routerLink="/ui/buttons" class="nav-link">
-    Buttons
-  </a>
-</li>
-
-
-    <li class="nav-item">
-  <a routerLink="/ui/images" class="nav-link">
-    Images
-  </a>
-</li>
-
-
-    <li class="nav-item">
-  <a routerLink="/ui/videos" class="nav-link">
-    Videos
-  </a>
-</li>
-
-  </ul>
-</li>
-    <!-- UI Elements -->
+      <ul class="nav flex-column ms-4 mt-2" *ngIf="isOpen('ui')">
+        <li class="nav-item"><a routerLink="/ui/alerts" class="nav-link">Alerts</a></li>
+        <li class="nav-item"><a routerLink="/ui/avatars" class="nav-link">Avatars</a></li>
+        <li class="nav-item"><a routerLink="/ui/badges" class="nav-link">Badges</a></li>
+        <li class="nav-item"><a routerLink="/ui/buttons" class="nav-link">Buttons</a></li>
+        <li class="nav-item"><a routerLink="/ui/images" class="nav-link">Images</a></li>
+        <li class="nav-item"><a routerLink="/ui/videos" class="nav-link">Videos</a></li>
+      </ul>
+    </li>
 
     <!-- Authentication -->
-   <li class="nav-item">
-  <a class="nav-link d-flex justify-content-between align-items-center"
-     (click)="toggleDropdown('auth')"
->
-    <span>
-      <i class="bi bi-plug me-2"></i>
-      Authentication
-    </span>
-    <i class="bi"
-       [class.bi-chevron-up]="openDropdown === 'auth'"
-       [class.bi-chevron-down]="openDropdown !== 'auth'"></i>
-  </a>
+    <li class="nav-item">
+      <a
+        class="nav-link d-flex align-items-center justify-content-between"
+        (click)="toggleDropdown('auth')"
+      >
+        <span class="d-flex align-items-center">
+          <i class="bi bi-plug me-2"></i>
+          Authentication
+        </span>
+        <i
+          class="bi"
+          [class.bi-chevron-up]="isOpen('auth')"
+          [class.bi-chevron-down]="!isOpen('auth')"
+        ></i>
+      </a>
 
-  <ul class="nav flex-column ms-4 mt-2"
-      *ngIf="openDropdown === 'auth'">
-    <li class="nav-item">
-      <a routerLink="/auth/signin" class="nav-link">
-        Sign In
-      </a>
+      <ul class="nav flex-column ms-4 mt-2" *ngIf="isOpen('auth')">
+        <li class="nav-item"><a routerLink="/auth/signin" class="nav-link">Sign In</a></li>
+        <li class="nav-item"><a routerLink="/auth/signup" class="nav-link">Sign Up</a></li>
+      </ul>
     </li>
-    <li class="nav-item">
-      <a routerLink="/auth/signup" class="nav-link">
-        Sign Up
-      </a>
-    </li>
+
   </ul>
-</li>
-    <!-- Authentication -->
-    <li class="nav-item">
-
+</div>

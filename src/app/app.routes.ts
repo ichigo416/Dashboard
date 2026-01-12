@@ -2,28 +2,39 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
 
-  // Redirect root → dashboard
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  },
-
-  // Dashboard
-  {
-    path: 'dashboard',
-    loadComponent: () =>
-      import('./pages/dashboard/dashboard')
-        .then(m => m.DashboardComponent),
-  }, 
-  {
-  path: 'dashboard',
-  redirectTo: '',
+  path: '',
+  redirectTo: 'dashboard/ecommerce',
   pathMatch: 'full',
 },
 
+{
+  path: 'dashboard',
+  children: [
+    {
+      path: '',
+      redirectTo: 'ecommerce',
+      pathMatch: 'full',
+    },
+    {
+      path: 'ecommerce',
+      loadComponent: () =>
+        import('./pages/dashboard/dashboard')
+          .then(m => m.DashboardComponent),
+    },
+  ],
+},
 
-  // Auth
+
+  {
+  path: 'calendar',
+  loadComponent: () =>
+    import('./calendar/calendar')
+      .then(m => m.CalendarComponent),
+},
+
+  // Authentication
+  
   {
     path: 'auth/signin',
     loadComponent: () =>
@@ -37,7 +48,9 @@ export const routes: Routes = [
         .then(m => m.SignUpComponent),
   },
 
+  // =========================
   // UI Elements
+  // =========================
   {
     path: 'ui/alerts',
     loadComponent: () =>
@@ -75,17 +88,43 @@ export const routes: Routes = [
         .then(m => m.VideosComponent),
   },
 
+  // Charts
+  
   {
-  path: 'charts/line',
-  loadComponent: () =>
-    import('./charts/line-chart/line-chart')
-      .then(m => m.LineChartComponent),
-},
+    path: 'charts/line',
+    loadComponent: () =>
+      import('./charts/line-chart/line-chart')
+        .then(m => m.LineChartComponent),
+  },
+  {
+    path: 'charts/bar',
+    loadComponent: () =>
+      import('./charts/bar-chart/bar-chart')
+        .then(m => m.BarChartComponent),
+  },
+
+  // Forms
+ 
+  {
+    path: 'forms/elements',
+    loadComponent: () =>
+      import('./forms/form-elements/form-elements')
+        .then(m => m.FormElementsComponent),
+  },
+
+  // Tables
+  
+  {
+    path: 'tables/basic',
+    loadComponent: () =>
+      import('./tables/basic-table/basic-table')
+        .then(m => m.BasicTableComponent),
+  },
 {
-  path: 'charts/bar',
+  path: 'profile',
   loadComponent: () =>
-    import('./charts/bar-chart/bar-chart')
-      .then(m => m.BarChartComponent),
+    import('./user-profile/user-profile')
+      .then(m => m.UserProfileComponent),
 },
 
 ];

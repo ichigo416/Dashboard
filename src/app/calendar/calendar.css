@@ -1,167 +1,109 @@
-.calendar-page {
-  padding: 8px 4px;
-}
-
-.calendar-card {
-  background: #ffffff;
+.calendar-container {
+  background: #fff;
   border-radius: 16px;
   padding: 20px;
-  border: 1px solid #e5e7eb;
 }
 
-/* Toolbar */
-.calendar-toolbar {
+/* HEADER */
+.calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-.icon-btn {
+.calendar-left {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-btn {
+  width: 36px;
+  height: 36px;
   border: 1px solid #e5e7eb;
-  background: #fff;
+  background: white;
   border-radius: 8px;
-  padding: 6px 12px;
-  font-size: 16px;
+  cursor: pointer;
 }
 
-.calendar-title {
-  font-size: 18px;
+.add-event-btn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
   font-weight: 600;
 }
 
-.view-toggle {
-  display: flex;
-  gap: 4px;
-}
-
-.toggle-btn {
+.view-toggle button {
   border: 1px solid #e5e7eb;
-  background: #f9fafb;
   padding: 6px 14px;
   border-radius: 8px;
-  font-size: 14px;
 }
 
-.toggle-btn.active {
-  background: #4f46e5;
-  color: #fff;
-  border-color: #4f46e5;
+.view-toggle .active {
+  background: #eef2ff;
+  color: #4f46e5;
 }
 
-/* Week Header */
-.calendar-weekdays {
+/* MONTH */
+.month-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+}
+
+.day-name {
   text-align: center;
-  font-size: 13px;
   font-weight: 600;
-  color: #9ca3af;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-/* Calendar Grid */
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  padding: 10px;
 }
 
 .day-cell {
-  height: 120px;
-  border-right: 1px solid #e5e7eb;
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid #e5e7eb;
+  min-height: 120px;
+  padding: 6px;
+}
+
+.event {
+  background: #eef2ff;
+  padding: 6px;
+  border-radius: 8px;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+/* WEEK */
+.week-grid {
+  border: 1px solid #e5e7eb;
+}
+
+.week-header,
+.week-row {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr);
+}
+
+.time-col {
   padding: 8px;
-  position: relative;
+  border-right: 1px solid #e5e7eb;
 }
 
-.day-cell:nth-child(7n) {
-  border-right: none;
+.day-col {
+  border-right: 1px solid #e5e7eb;
+  padding: 6px;
 }
 
-.day-number {
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-}
-
-/* Day View */
-.calendar-day-view .day-cell.full {
-  height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  font-size: 18px;
-}
-/* Phase 2: outside month days */
-.day-cell.outside {
-  background: #f9fafb;
-  color: #9ca3af;
-}
-
-/* ===== Phase 4: Day View ===== */
-
-.calendar-day-view {
-  margin-top: 16px;
+/* DAY */
+.day-grid {
+  border: 1px solid #e5e7eb;
 }
 
 .day-header {
+  padding: 10px;
   font-weight: 600;
-  font-size: 16px;
 }
 
-.day-timeline {
-  border-top: 1px solid #e5e7eb;
-}
-
-.hour-row {
-  display: flex;
-  height: 48px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.hour-label {
-  width: 70px;
-  padding-top: 6px;
-  font-size: 13px;
-  color: #6b7280;
-}
-
-.hour-slot {
-  flex: 1;
-  position: relative;
-}
-
-/* ===== Phase 5: Events ===== */
-
-.event-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-top: 4px;
-}
-
-.event-block {
-  margin-top: 6px;
-  padding: 4px 6px;
-  border-radius: 6px;
-  font-size: 12px;
-  color: #fff;
-}
-
-/* Event colors */
-.meeting {
-  background: #6366f1;
-}
-
-.workshop {
-  background: #16a34a;
-}
-
-.personal {
-  background: #f59e0b;
-}
-.holiday {
-  background: #ef4444;
+.day-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
 }
