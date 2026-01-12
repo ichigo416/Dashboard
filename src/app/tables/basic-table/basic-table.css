@@ -1,0 +1,26 @@
+.table th {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.avatar-group {
+  display: flex;
+}
+
+.avatar-group img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-left: -8px;
+}
+
+.avatar-group img:first-child {
+  margin-left: 0;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 500;
+}
