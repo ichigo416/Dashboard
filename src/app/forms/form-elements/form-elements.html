@@ -1,0 +1,141 @@
+<div class="container-fluid">
+
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-semibold mb-0">Form Elements</h3>
+    <div class="text-muted">
+      Home &nbsp;›&nbsp; Form Elements
+    </div>
+  </div>
+
+  <!-- CONTENT GRID -->
+  <div class="row g-4">
+
+    <!-- Default Inputs -->
+    <div class="col-lg-6">
+      <div class="card p-4">
+        <h5 class="fw-semibold mb-3">Default Inputs</h5>
+
+        <div class="mb-3">
+          <label class="form-label">Input</label>
+          <input class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Input with Placeholder</label>
+          <input class="form-control" placeholder="info@gmail.com" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Select Input</label>
+          <select class="form-select">
+            <option>Select Option</option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Password Input</label>
+          <input type="password" class="form-control" placeholder="Enter your password" />
+        </div>
+
+        <div>
+          <label class="form-label">Date Picker Input</label>
+          <input type="date" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Groups -->
+    <div class="col-lg-6">
+      <div class="card p-4">
+        <h5 class="fw-semibold mb-3">Inputs Group</h5>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <div class="input-group">
+            <span class="input-group-text">@</span>
+            <input class="form-control" placeholder="info@gmail.com" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Phone</label>
+          <input class="form-control" placeholder="+1 (555) 000-0000" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">URL</label>
+          <div class="input-group">
+            <span class="input-group-text">http://</span>
+            <input class="form-control" placeholder="www.tailadmin.com" />
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label">Website</label>
+          <div class="input-group">
+            <input class="form-control" value="www.tailadmin.com" />
+            <button class="btn btn-outline-secondary">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Time & Payment Inputs -->
+    <div class="col-lg-6">
+      <div class="card p-4">
+        <h5 class="fw-semibold mb-3">Special Inputs</h5>
+
+        <!-- Time Select -->
+        <div class="mb-4">
+          <label class="form-label">Time Select Input</label>
+          <div class="position-relative">
+            <input
+              type="time"
+              class="form-control pe-5"
+              placeholder="Select time"
+            />
+            <i
+              class="bi bi-clock position-absolute end-0 top-50 translate-middle-y me-3 text-muted"
+            ></i>
+          </div>
+        </div>
+
+        <!-- Payment Input -->
+        <div>
+          <label class="form-label">Input with Payment</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              class="form-control ps-5"
+              placeholder="Card number"
+            />
+            <i
+              class="bi bi-credit-card position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"
+            ></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Input -->
+    <div class="col-lg-6">
+      <div class="card p-4">
+        <h5 class="fw-semibold mb-3">File Input</h5>
+
+        <label class="form-label">Upload file</label>
+
+        <div class="border rounded p-3 d-flex align-items-center gap-3">
+          <input type="file" id="fileUpload" hidden />
+          <label for="fileUpload" class="btn btn-outline-primary btn-sm mb-0">
+            Choose File
+          </label>
+          <span class="text-muted small">No file chosen</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
