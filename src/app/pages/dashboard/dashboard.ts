@@ -4,11 +4,14 @@ import {
   ViewChild,
   ElementRef,
   Inject,
-  PLATFORM_ID
+  PLATFORM_ID,
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
 import { DashboardApiService } from '../../services/dashboard-api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +20,8 @@ import { DashboardApiService } from '../../services/dashboard-api.service';
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
-export class DashboardComponent implements AfterViewInit {
+export class DashboardComponent
+  implements OnInit, AfterViewInit, OnDestroy {
 
   // ===== BAR CHART =====
   @ViewChild('salesChart') salesChart!: ElementRef<HTMLCanvasElement>;
@@ -34,11 +38,37 @@ export class DashboardComponent implements AfterViewInit {
   statsSales: number[] = [];
   statsRevenue: number[] = [];
 
+  // 🔴 LIVE SUMMARY (Polling / SSE)
+  summary: any;
+  private summarySub!: Subscription;
+
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
     private dashboardApi: DashboardApiService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  // ================= ON INIT =================
+  ngOnInit(): void {
+    if (!this.isBrowser) return;
+
+    // 🔵 START SERVER-SENT EVENTS (RECOMMENDED)
+   this.dashboardApi.startSSE();
+
+this.summarySub = this.dashboardApi.summary$.subscribe(data => {
+  this.summary = data;
+});
+
+
+    // 🟡 OR use polling instead
+    // this.dashboardApi.startPolling(5000);
+
+    // Subscribe to live summary
+    this.summarySub = this.dashboardApi.summary$.subscribe(data => {
+      this.summary = data;
+      console.log('LIVE SUMMARY:', data);
+    });
   }
 
   // ================= AFTER VIEW =================
@@ -47,17 +77,21 @@ export class DashboardComponent implements AfterViewInit {
     this.loadDashboardData();
   }
 
+  // ================= CLEANUP =================
+  ngOnDestroy(): void {
+    this.summarySub?.unsubscribe();
+  }
+
   // ================= LOAD BACKEND DATA =================
   private loadDashboardData(): void {
 
-    // ===== BAR CHART DATA =====
+    // ===== BAR CHART DATA (ONE-TIME LOAD) =====
     this.dashboardApi.getMonthlySales().subscribe(data => {
-      console.log('MONTHLY SALES FROM BACKEND:', data);
       this.monthlySales = data;
       this.renderSalesChart();
     });
 
-    // ===== LINE CHART DATA =====
+    // ===== LINE CHART DATA (ONE-TIME LOAD) =====
     this.dashboardApi.getStatistics('monthly').subscribe(data => {
       this.statsSales = data;
       this.statsRevenue = data.map(v => Math.round(v * 0.25));
@@ -148,20 +182,7 @@ export class DashboardComponent implements AfterViewInit {
           intersect: false
         },
         plugins: {
-          legend: { display: false },
-          tooltip: {
-            enabled: true,
-            backgroundColor: '#ffffff',
-            titleColor: '#111827',
-            bodyColor: '#111827',
-            borderColor: '#e5e7eb',
-            borderWidth: 1,
-            padding: 12,
-            callbacks: {
-              title: items => items[0].label,
-              label: item => `${item.dataset.label}: ${item.formattedValue}`
-            }
-          }
+          legend: { display: false }
         },
         scales: {
           x: { grid: { display: false }, border: { display: false } },
