@@ -6,7 +6,8 @@ import {
   Inject,
   PLATFORM_ID,
   OnInit,
-  OnDestroy
+  OnDestroy,
+  ChangeDetectorRef
 } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
@@ -20,111 +21,130 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
-export class DashboardComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  // ===== BAR CHART =====
   @ViewChild('salesChart') salesChart!: ElementRef<HTMLCanvasElement>;
-  private salesBarChart: Chart | null = null;
-
-  // ===== LINE CHART =====
   @ViewChild('statsChart') statsChart!: ElementRef<HTMLCanvasElement>;
-  private statsLineChart: Chart | null = null;
 
-  private isBrowser = false;
+  private salesChartInstance!: Chart;
+  private statsChartInstance!: Chart;
+  private subscriptions: Subscription[] = [];
 
-  // ===== BACKEND DATA =====
-  monthlySales: number[] = [];
-  statsSales: number[] = [];
-  statsRevenue: number[] = [];
+  isBrowser = false;
 
-  // 🔴 LIVE SUMMARY (Polling / SSE)
-  summary: any;
-  private summarySub!: Subscription;
+  // Dashboard data - default values until SSE updates them
+  summary = {
+    customers: { count: 3782, changePercent: 11.01 },
+    orders: { count: 5359, changePercent: -9.05 }
+  };
+
+  monthlySalesData: number[] = [];
 
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
-    private dashboardApi: DashboardApiService
+    private api: DashboardApiService,
+    private cdr: ChangeDetectorRef  // Add this
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  // ================= ON INIT =================
   ngOnInit(): void {
     if (!this.isBrowser) return;
 
-    // 🔵 START SERVER-SENT EVENTS (RECOMMENDED)
-   this.dashboardApi.startSSE();
+    console.log('🎯 Dashboard component initialized');
 
-this.summarySub = this.dashboardApi.summary$.subscribe(data => {
-  this.summary = data;
-});
-
-
-    // 🟡 OR use polling instead
-    // this.dashboardApi.startPolling(5000);
-
-    // Subscribe to live summary
-    this.summarySub = this.dashboardApi.summary$.subscribe(data => {
-      this.summary = data;
-      console.log('LIVE SUMMARY:', data);
+    // 📡 Subscribe to summary updates
+    const summarySub = this.api.summary$.subscribe(data => {
+      if (data) {
+        console.log('📊 Summary received:', data);
+        
+        // Update with new data
+        this.summary = {
+          customers: {
+            count: data.customers?.count || 0,
+            changePercent: Number((data.customers?.changePercent || 0).toFixed(2))
+          },
+          orders: {
+            count: data.orders?.count || 0,
+            changePercent: Number((data.orders?.changePercent || 0).toFixed(2))
+          }
+        };
+        
+        console.log('✅ Summary updated on screen:', this.summary);
+        
+        // FORCE Angular to detect changes
+        this.cdr.detectChanges();
+      }
     });
+    this.subscriptions.push(summarySub);
+
+    // 📡 Subscribe to monthly sales updates
+    const salesSub = this.api.monthlySales$.subscribe(data => {
+      if (data && Array.isArray(data)) {
+        console.log('📊 Monthly sales received:', data);
+        
+        if (data.length > 0 && typeof data[0] === 'object' && 'value' in data[0]) {
+          this.monthlySalesData = data.map((item: any) => item.value);
+        } else if (data.length > 0 && typeof data[0] === 'number') {
+          this.monthlySalesData = data;
+        }
+        
+        if (this.salesChartInstance && this.monthlySalesData.length > 0) {
+          this.updateSalesChart();
+        }
+        
+        // FORCE Angular to detect changes
+        this.cdr.detectChanges();
+      }
+    });
+    this.subscriptions.push(salesSub);
   }
 
-  // ================= AFTER VIEW =================
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
-    this.loadDashboardData();
+    setTimeout(() => {
+      this.renderMonthlySales();
+      this.renderStatistics();
+    }, 100);
   }
 
-  // ================= CLEANUP =================
   ngOnDestroy(): void {
-    this.summarySub?.unsubscribe();
+    console.log('🗑️ Dashboard component destroyed');
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+
+    if (this.salesChartInstance) {
+      this.salesChartInstance.destroy();
+    }
+    if (this.statsChartInstance) {
+      this.statsChartInstance.destroy();
+    }
   }
 
-  // ================= LOAD BACKEND DATA =================
-  private loadDashboardData(): void {
-
-    // ===== BAR CHART DATA (ONE-TIME LOAD) =====
-    this.dashboardApi.getMonthlySales().subscribe(data => {
-      this.monthlySales = data;
-      this.renderSalesChart();
-    });
-
-    // ===== LINE CHART DATA (ONE-TIME LOAD) =====
-    this.dashboardApi.getStatistics('monthly').subscribe(data => {
-      this.statsSales = data;
-      this.statsRevenue = data.map(v => Math.round(v * 0.25));
-      this.renderStatsChart();
-    });
-  }
-
-  // ================= BAR CHART =================
-  private renderSalesChart(): void {
-    if (!this.salesChart) return;
-
-    this.salesBarChart?.destroy();
-
-    this.salesBarChart = new Chart(this.salesChart.nativeElement, {
+  private renderMonthlySales(): void {
+    const chartData = this.monthlySalesData.length > 0 
+      ? this.monthlySalesData 
+      : [150, 380, 190, 280, 170, 180, 270, 100, 200, 380, 260, 100];
+    
+    this.salesChartInstance = new Chart(this.salesChart.nativeElement, {
       type: 'bar',
       data: {
         labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
         datasets: [{
-          data: this.monthlySales.length
-            ? this.monthlySales
-            : [150, 380, 190, 280, 170, 180, 270, 100, 200, 380, 260, 100],
+          data: chartData,
           backgroundColor: '#6366f1',
           borderRadius: 10,
-          barThickness: 26
+          barThickness: 20
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: { grid: { display: false }, border: { display: false } },
+          x: {
+            grid: { display: false },
+            border: { display: false }
+          },
           y: {
             beginAtZero: true,
             max: 400,
@@ -137,53 +157,41 @@ this.summarySub = this.dashboardApi.summary$.subscribe(data => {
     });
   }
 
-  // ================= LINE CHART =================
-  private renderStatsChart(): void {
-    if (!this.statsChart) return;
+  private updateSalesChart(): void {
+    if (this.salesChartInstance && this.monthlySalesData.length > 0) {
+      this.salesChartInstance.data.datasets[0].data = this.monthlySalesData;
+      this.salesChartInstance.update('none');
+    }
+  }
 
-    this.statsLineChart?.destroy();
-
-    this.statsLineChart = new Chart(this.statsChart.nativeElement, {
+  private renderStatistics(): void {
+    this.statsChartInstance = new Chart(this.statsChart.nativeElement, {
       type: 'line',
       data: {
-        labels: ['Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
         datasets: [
           {
-            label: 'Sales',
-            data: this.statsSales.length
-              ? this.statsSales
-              : [190, 170, 160, 175, 165],
+            data: [180,190,170,160,175,165,170,200,225,210,240,235],
             borderColor: '#4f46e5',
-            backgroundColor: 'rgba(79,70,229,0.15)',
+            backgroundColor: 'rgba(79,70,229,0.12)',
             fill: true,
-            tension: 0.4,
-            pointRadius: 4,
-            pointHoverRadius: 6
+            tension: 0.45,
+            pointRadius: 0
           },
           {
-            label: 'Revenue',
-            data: this.statsRevenue.length
-              ? this.statsRevenue
-              : [30, 50, 40, 55, 40],
+            data: [40,30,50,40,55,40,70,100,110,120,150,140],
             borderColor: '#93c5fd',
-            backgroundColor: 'rgba(147,197,253,0.2)',
+            backgroundColor: 'rgba(147,197,253,0.25)',
             fill: true,
-            tension: 0.4,
-            pointRadius: 4,
-            pointHoverRadius: 6
+            tension: 0.45,
+            pointRadius: 0
           }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        interaction: {
-          mode: 'nearest',
-          intersect: false
-        },
-        plugins: {
-          legend: { display: false }
-        },
+        plugins: { legend: { display: false } },
         scales: {
           x: { grid: { display: false }, border: { display: false } },
           y: {

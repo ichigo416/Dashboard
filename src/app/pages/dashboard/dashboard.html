@@ -1,103 +1,75 @@
-
 <!-- ================= TOP GRID ================= -->
-<div class="row g-4 mb-4">
+<div class="row g-4 mb-4 align-items-stretch">
 
-  <!-- LEFT SIDE -->
+  <!-- LEFT SIDE - Cards -->
   <div class="col-xl-8 col-lg-12">
 
-    <!-- ================= TOP ROW ================= -->
-    <div class="row g-4 mb-3">
+    <!-- TOP CARDS ROW -->
+    <div class="row g-4 mb-4">
 
       <!-- Customers -->
-      <div class="col-md-6"> 
-  <div class="stat-card w-100"> 
-    <ng-container *ngIf="summary">
+      <div class="col-md-6">
+        <div class="stat-card h-100">
+          <div class="stat-icon">
+            <i class="bi bi-people"></i>
+          </div>
 
-      <div class="stat-icon">
-        <i class="bi bi-people"></i> 
+          <p class="stat-title">Customers</p>
+
+          <div class="stat-row">
+            <h2 class="stat-value">{{ summary.customers.count }}</h2>
+            <span class="stat-badge stat-up">
+              <i class="bi bi-arrow-up"></i> {{ summary.customers.changePercent }}%
+            </span>
+          </div>
+        </div>
       </div>
-
-      <div class="stat-content">
-        <p class="stat-title">Customers</p>
-
-        <h2 class="stat-value">
-          {{ summary.customers.count | number:'1.0-0' }}
-        </h2>
-
-        <span class="stat-badge"
-          [ngClass]="summary.customers.changePercent >= 0 ? 'stat-up' : 'stat-down'">
-          <i class="bi"
-            [ngClass]="summary.customers.changePercent >= 0 
-              ? 'bi-arrow-up'
-              : 'bi-arrow-down'">
-          </i>
-          {{ summary.customers.changePercent | number:'1.2-2' }}%
-        </span>
-      </div>
-
-    </ng-container>
-  </div>
-</div>
-
 
       <!-- Orders -->
-     <div class="col-md-6">
-  <div class="stat-card w-100">
-    <ng-container *ngIf="summary">
+      <div class="col-md-6">
+        <div class="stat-card h-100">
+          <div class="stat-icon">
+            <i class="bi bi-box"></i>
+          </div>
 
-      <div class="stat-icon">
-        <i class="bi bi-box"></i>
+          <p class="stat-title">Orders</p>
+
+          <div class="stat-row">
+            <h2 class="stat-value">{{ summary.orders.count }}</h2>
+            <span class="stat-badge stat-down">
+              <i class="bi bi-arrow-down"></i> {{ summary.orders.changePercent }}%
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div class="stat-content">
-        <p class="stat-title">Orders</p>
+    </div>
 
-        <h2 class="stat-value">
-          {{ summary.orders.count | number:'1.0-0' }}
-        </h2>
-
-        <span class="stat-badge"
-          [ngClass]="summary.orders.changePercent >= 0 ? 'stat-up' : 'stat-down'">
-          <i class="bi"
-            [ngClass]="summary.orders.changePercent >= 0
-              ? 'bi-arrow-up'
-              : 'bi-arrow-down'">
-          </i>
-          {{ summary.orders.changePercent | number:'1.2-2' }}%
-        </span>
-      </div>
-
-    </ng-container>
-  </div>
-</div>
-
-    <!-- ================= MONTHLY SALES ================= -->
+    <!-- MONTHLY SALES -->
     <div class="card p-4 border-0 shadow-sm">
-      <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="d-flex justify-content-between mb-3">
         <h5 class="fw-semibold mb-0">Monthly Sales</h5>
         <i class="bi bi-three-dots"></i>
       </div>
 
-      <div style="height: 320px; position: relative;">
-        <canvas #salesChart height="320"></canvas>
+      <div class="chart-sm">
+        <canvas #salesChart></canvas>
       </div>
     </div>
-
   </div>
 
-  <!-- RIGHT SIDE -->
+  <!-- RIGHT SIDE - Monthly Target -->
   <div class="col-xl-4 col-lg-12">
     <div class="card p-4 border-0 shadow-sm h-100 d-flex flex-column">
 
-      <div class="d-flex justify-content-between align-items-start">
+      <div class="d-flex justify-content-between">
         <div>
           <h5 class="fw-semibold mb-1">Monthly Target</h5>
-          <p class="text-muted mb-0">Target you’ve set for each month</p>
+          <p class="text-muted mb-0">Target you've set for each month</p>
         </div>
         <i class="bi bi-three-dots"></i>
       </div>
 
-      <!-- Meter (still static) -->
       <div class="d-flex justify-content-center my-4">
         <div class="meter">
           <span class="meter-value">75.55%</span>
@@ -109,12 +81,10 @@
       </div>
 
       <p class="text-center text-muted px-3">
-        You earn $3287 today, it's higher than last month.
-        <br />
+        You earn $3287 today, it's higher than last month.<br />
         Keep up your good work!
       </p>
 
-      <!-- Bottom stats -->
       <div class="row text-center mt-auto border-top pt-3">
         <div class="col">
           <p class="text-muted mb-1">Target</p>
@@ -132,17 +102,16 @@
 
     </div>
   </div>
-
 </div>
 
 <!-- ================= STATISTICS ================= -->
 <div class="row g-4 mt-4">
   <div class="col-12">
     <div class="card p-4 border-0 shadow-sm">
-      <div class="d-flex justify-content-between align-items-start mb-4">
+      <div class="d-flex justify-content-between mb-4">
         <div>
           <h5 class="fw-semibold mb-1">Statistics</h5>
-          <p class="text-muted mb-0">Target you’ve set for each month</p>
+          <p class="text-muted mb-0">Target you've set for each month</p>
         </div>
         <div class="btn-group">
           <button class="btn btn-outline-secondary btn-sm active">Monthly</button>
@@ -151,7 +120,7 @@
         </div>
       </div>
 
-      <div style="height: 300px; position: relative;">
+      <div class="chart-lg">
         <canvas #statsChart></canvas>
       </div>
     </div>

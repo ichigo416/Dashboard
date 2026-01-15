@@ -1,11 +1,10 @@
+/* ================= STATS CARDS ================= */
 .stat-card {
-  padding: 24px;
+  padding: 22px;
   border-radius: 16px;
   background: #ffffff;
   box-shadow: 0 10px 20px rgba(0,0,0,0.04);
-  height: 100%;
   display: flex;
-  justify-content: flex-start; 
   flex-direction: column;
 }
 
@@ -17,38 +16,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
-}
-
-.stat-content {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  margin-bottom: 14px;
 }
 
 .stat-title {
   color: #6b7280;
   font-size: 14px;
-  margin: 0;
+  margin-bottom: 6px;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .stat-value {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
-  margin: 0;
   color: #111827;
+  margin: 0;
 }
 
 .stat-badge {
-  margin-top: 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
   padding: 6px 10px;
-  margin-top: 6px; 
-  font-size: 13px;
   border-radius: 999px;
-  width: fit-content;
+  font-size: 13px;
+  white-space: nowrap;
 }
 
 .stat-up {
@@ -61,12 +56,12 @@
   color: #dc2626;
 }
 
-
-/* Monthly Target Meter (Correct 75.55%) */
+/* ================= METER ================= */
 .meter {
-  width: 240px;
-  height: 120px;
-  border-radius: 240px 240px 0 0;
+  width: 260px;
+  height: 130px;
+   position: relative;
+  border-radius: 260px 260px 0 0;
   background: conic-gradient(
     from 180deg,
     #6366f1 0deg 136deg,
@@ -78,160 +73,53 @@
 .meter::after {
   content: '';
   position: absolute;
-  width: 200px;
-  height: 100px;
+  width: 220px;
+  height: 110px;
   background: #ffffff;
-  border-radius: 200px 200px 0 0;
+  border-radius: 220px 220px 0 0;
   bottom: 0;
   left: 20px;
 }
 
-
 .meter-value {
   position: absolute;
-  bottom: 20px;
+  bottom: 22px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 28px;
   font-weight: 700;
   color: #111827;
-  z-index: 1;
+  z-index: 2;
 }
 
-.meter-value {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 28px;
-  font-weight: 700;
-  color: #111827;
-  z-index: 1;
-}
- 
-/* ===== DEMOGRAPHIC MAP ===== */
-.demographic-map {
+/* ================= CHART SIZES ================= */
+.chart-sm {
+  height: 240px;
   position: relative;
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 16px;
 }
 
-.demographic-map img {
-  width: 100%;
-  opacity: 0.8;
-}
-
-.map-tooltip {
-  position: absolute;
-  top: 40%;
-  left: 55%;
-  background: #4f46e5;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-}
-
-/* ===== FLAGS ===== */
-.flag-icon {
-  width: 32px;
-  height: 20px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-/* ===== PRODUCTS ===== */
-.product-img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  border-radius: 8px;
-  background: #f8fafc;
-  padding: 4px;
-}
-
-/* ===== PROGRESS ===== */
-.progress {
-  height: 6px;
-  background-color: #e5e7eb;
-  border-radius: 10px;
-}
-.progress-bar {
-  border-radius: 10px;
-}
-
-/* ================= MAP ================= */
-.map-wrapper {
+.chart-lg {
+  height: 340px;
   position: relative;
-  background: #f9fafb;
-  border-radius: 12px;
-  padding: 12px;
 }
 
-.world-map {
-  width: 100%;
-  height: auto;
+.chart-sm canvas,
+.chart-lg canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
 }
-
-.country {
-  fill: #d1d5db;
-  stroke: #ffffff;
-  stroke-width: 1;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.country:hover {
-  fill: #6366f1;
-}
-
-.country.active {
-  fill: #6366f1;
-}
-
-/* Tooltip */
-.map-tooltip {
+.chart-legend {
   position: absolute;
-  background: #4f46e5;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 13px;
-  pointer-events: none;
-  white-space: nowrap;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 12px;
 }
-
-/* ===== MAP DOTS ===== */
-.map-dot {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: #6366f1;
-  border-radius: 50%;
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #6b7280;
 }
-
-.map-dot.usa {
-  top: 42%;
-  left: 24%;
-}
-
-.map-dot.france {
-  top: 38%;
-  left: 48%;
-}
-
-.map-dot.india {
-  top: 50%;
-  left: 60%;
-}
-.map-dot.brazil {
-  top: 65%;
-  left: 35%;
-}
-
-/* 🔥 FIX: Remove forced height from Customers Demographic only */
-.customers-demographic-card {
-  height: auto !important;
-}
- 
