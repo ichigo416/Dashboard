@@ -1,0 +1,123 @@
+<div class="container-fluid p-4">
+
+  <!-- ✅ COUNTERS (ADD ONLY) -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h6>Total Users</h6>
+          <h4>{{ totalUsers }}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h6>Active Users</h6>
+          <h4>{{ activeUsers }}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h6>Suspended Users</h6>
+          <h4>{{ suspendedUsers }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-semibold mb-0">Manage Customers</h4>
+            <button class="btn btn-primary" [routerLink]="['/customers/add']">
+              <i class="bi bi-plus-lg me-2"></i>Add Customer
+            </button>
+          </div>
+
+          <div class="mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search by name, email, or phone..."
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearchChange()">
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Phone</th>
+                  <th>City</th>
+                  <th>Country</th>
+                  <th>Date of Birth</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let customer of filteredCustomers">
+                  <td>{{ customer.firstName }} {{ customer.lastName }}</td>
+                  <td>{{ customer.email }}</td>
+                  <td>
+                    <span
+                      class="badge"
+                      [ngClass]="customer.status === 'SUSPENDED' ? 'bg-danger' : 'bg-success'">
+                      {{ customer.status === 'SUSPENDED' ? 'Suspended' : 'Active' }}
+                    </span>
+                  </td>
+                  <td>{{ customer.phone }}</td>
+                  <td>{{ customer.city }}</td>
+                  <td>{{ customer.country }}</td>
+                  <td>{{ customer.dateOfBirth | date:'mediumDate' }}</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-primary me-2"
+                      (click)="openEditModal(customer)">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+
+                    <button
+  class="btn btn-sm me-2"
+  [ngClass]="customer.status === 'SUSPENDED'
+    ? 'btn-outline-success'
+    : 'btn-outline-warning'"
+  (click)="toggleCustomerStatus(customer)">
+  
+  <i
+    class="bi"
+    [ngClass]="customer.status === 'SUSPENDED'
+      ? 'bi-play-circle'
+      : 'bi-pause-circle'">
+  </i>
+</button>
+
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="openDeleteModal(customer.id)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <tr *ngIf="filteredCustomers.length === 0">
+                  <td colspan="8" class="text-center text-muted py-4">
+                    No customers found
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
