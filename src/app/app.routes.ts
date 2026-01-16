@@ -25,6 +25,23 @@ export const routes: Routes = [
   ],
 },
 
+  {
+    path: 'customers',
+    children: [
+      {
+        path: 'add',
+        loadComponent: () =>
+          import('./customers/add-customers/add-customers')
+            .then(m => m.AddCustomerComponent),
+      },
+      {
+        path: 'manage',
+        loadComponent: () =>
+          import('./customers/manage-customers/manage-customers')
+            .then(m => m.ManageCustomerComponent),
+      },
+    ],
+  },
 
   {
   path: 'calendar',

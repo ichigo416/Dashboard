@@ -10,13 +10,13 @@ import { RouterModule } from '@angular/router';
   styleUrl: './sidebar.css'
 })
 export class SidebarComponent {
-  openDropdown: 'forms' | 'charts' | 'ui' | 'auth' | 'tables' | 'dashboard' | null = null;
+  openDropdown: 'forms' | 'charts' | 'ui' | 'auth' | 'tables' | 'dashboard' | 'customers' | null = null;
 
-  toggleDropdown(section: 'forms' | 'charts' | 'ui' | 'auth' | 'tables' | 'dashboard') {
+  toggleDropdown(section: 'forms' | 'charts' | 'ui' | 'auth' | 'tables' | 'dashboard' | 'customers'): void {
     this.openDropdown = this.openDropdown === section ? null : section;
   }
 
-  isOpen(section: 'forms' | 'charts' | 'ui' | 'auth' | 'tables'| 'dashboard'): boolean {
+  isOpen(section: 'forms' | 'charts' | 'ui' | 'auth' | 'tables'| 'dashboard' | 'customers '): boolean {
     return this.openDropdown === section;
   }
 }
