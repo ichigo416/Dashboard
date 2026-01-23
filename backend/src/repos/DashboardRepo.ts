@@ -42,7 +42,6 @@ function startAutoUpdate() {
 // Start auto update ONCE
 startAutoUpdate();
 
-// -------------------------------
 // REPO CLASS
 // -------------------------------
 export class DashboardRepo {
