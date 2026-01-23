@@ -1,11 +1,21 @@
-<div class="d-flex min-vh-100">
-  <app-sidebar></app-sidebar>
+<!-- Layout for authenticated pages -->
+<ng-container *ngIf="showLayout; else authOnly">
+  <div class="d-flex h-100">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
 
-  <div class="flex-grow-1 bg-light d-flex flex-column">
-    <app-navbar></app-navbar>
+    <!-- Main content -->
+    <div class="flex-grow-1 d-flex flex-column">
+      <app-navbar></app-navbar>
 
-    <div class="container-fluid py-4 px-4 flex-grow-1">
-      <router-outlet></router-outlet>
+      <main class="flex-grow-1 p-4">
+        <router-outlet></router-outlet>
+      </main>
     </div>
   </div>
-</div>
+</ng-container>
+
+<!-- Layout for login / auth -->
+<ng-template #authOnly>
+  <router-outlet></router-outlet>
+</ng-template>

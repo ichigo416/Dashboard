@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { SidebarComponent } from './layout/sidebar/sidebar';
 import { NavbarComponent } from './layout/navbar/navbar';
 import { DashboardApiService } from './services/dashboard-api.service';
@@ -8,25 +8,42 @@ import { DashboardApiService } from './services/dashboard-api.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    SidebarComponent,
-    NavbarComponent
-  ],
+  imports: [CommonModule, RouterOutlet, SidebarComponent, NavbarComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
-export class App implements OnInit {
-  
+export class AppComponent implements OnInit {
+
+  showLayout = false;
+
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private api: DashboardApiService
+    private router: Router,
+    private dashboardApi: DashboardApiService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
+
     if (isPlatformBrowser(this.platformId)) {
-      console.log('🚀 App component: Starting SSE connection');
-      this.api.startSSE();
+
+      // 🔴 FORCE LOGIN ON REFRESH (TS SAFE)
+      const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+
+      if (navEntries.length && navEntries[0].type === 'reload') {
+        localStorage.clear();
+        this.router.navigate(['/']);
+        return;
+      }
+
+      // ✅ Start SSE once
+      this.dashboardApi.startSSE();
     }
+
+    // 👁️ Control layout visibility
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showLayout = event.url !== '/';
+      }
+    });
   }
 }

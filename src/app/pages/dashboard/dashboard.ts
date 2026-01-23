@@ -13,6 +13,7 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
 import { DashboardApiService } from '../../services/dashboard-api.service';
 import { Subscription } from 'rxjs';
+import { IdleService } from '../../services/idle.service'; // 🔥 ADDED
 
 @Component({
   selector: 'app-dashboard',
@@ -43,7 +44,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
     private api: DashboardApiService,
-    private cdr: ChangeDetectorRef  // Add this
+    private cdr: ChangeDetectorRef,
+    private idleService: IdleService // 🔥 ADDED
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -53,12 +55,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     console.log('🎯 Dashboard component initialized');
 
+    // 🔥 START IDLE SESSION WATCH
+    this.idleService.startWatching();
+
+    // 🔍 DEBUG: check SSE status
+    console.log('📡 SSE connected:', this.api.isSSEConnected());
+
     // 📡 Subscribe to summary updates
     const summarySub = this.api.summary$.subscribe(data => {
       if (data) {
         console.log('📊 Summary received:', data);
-        
-        // Update with new data
+
         this.summary = {
           customers: {
             count: data.customers?.count || 0,
@@ -69,10 +76,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             changePercent: Number((data.orders?.changePercent || 0).toFixed(2))
           }
         };
-        
+
         console.log('✅ Summary updated on screen:', this.summary);
-        
-        // FORCE Angular to detect changes
         this.cdr.detectChanges();
       }
     });
@@ -82,18 +87,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     const salesSub = this.api.monthlySales$.subscribe(data => {
       if (data && Array.isArray(data)) {
         console.log('📊 Monthly sales received:', data);
-        
+
         if (data.length > 0 && typeof data[0] === 'object' && 'value' in data[0]) {
           this.monthlySalesData = data.map((item: any) => item.value);
         } else if (data.length > 0 && typeof data[0] === 'number') {
           this.monthlySalesData = data;
         }
-        
+
         if (this.salesChartInstance && this.monthlySalesData.length > 0) {
           this.updateSalesChart();
         }
-        
-        // FORCE Angular to detect changes
+
         this.cdr.detectChanges();
       }
     });
@@ -102,6 +106,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
+
     setTimeout(() => {
       this.renderMonthlySales();
       this.renderStatistics();
@@ -121,10 +126,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private renderMonthlySales(): void {
-    const chartData = this.monthlySalesData.length > 0 
-      ? this.monthlySalesData 
+    const chartData = this.monthlySalesData.length > 0
+      ? this.monthlySalesData
       : [150, 380, 190, 280, 170, 180, 270, 100, 200, 380, 260, 100];
-    
+
     this.salesChartInstance = new Chart(this.salesChart.nativeElement, {
       type: 'bar',
       data: {
@@ -141,10 +146,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: {
-            grid: { display: false },
-            border: { display: false }
-          },
+          x: { grid: { display: false }, border: { display: false } },
           y: {
             beginAtZero: true,
             max: 400,
