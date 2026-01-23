@@ -1,0 +1,94 @@
+{
+  "summary": {
+    "customers": {
+      "count": 3946,
+      "changePercent": 8.61
+    },
+    "orders": {
+      "count": 5100,
+      "changePercent": -7.7
+    }
+  },
+  "monthlySales": [
+    {
+      "month": "Jan",
+      "value": 150
+    },
+    {
+      "month": "Feb",
+      "value": 380
+    },
+    {
+      "month": "Mar",
+      "value": 200
+    },
+    {
+      "month": "Apr",
+      "value": 300
+    },
+    {
+      "month": "May",
+      "value": 180
+    },
+    {
+      "month": "Jun",
+      "value": 190
+    },
+    {
+      "month": "Jul",
+      "value": 270
+    },
+    {
+      "month": "Aug",
+      "value": 100
+    },
+    {
+      "month": "Sep",
+      "value": 200
+    },
+    {
+      "month": "Oct",
+      "value": 380
+    },
+    {
+      "month": "Nov",
+      "value": 270
+    },
+    {
+      "month": "Dec",
+      "value": 100
+    }
+  ],
+  "target": {
+    "targetPercent": 75.55,
+    "todayRevenue": 3287,
+    "comparison": "+10%"
+  },
+  "statistics": {
+    "monthly": [
+      180,
+      190,
+      170,
+      160,
+      175,
+      165,
+      170,
+      200,
+      225,
+      210,
+      240,
+      235
+    ],
+    "quarterly": [
+      520,
+      480,
+      540,
+      600
+    ],
+    "annually": [
+      2400,
+      2600,
+      2800
+    ]
+  }
+}
